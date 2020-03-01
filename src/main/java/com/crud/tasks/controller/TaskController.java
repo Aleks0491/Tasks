@@ -1,6 +1,8 @@
 package com.crud.tasks.controller;
 
 import com.crud.tasks.domain.TaskDto;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,8 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @RestController
-@RequestMapping("/v1/task")
+@RequestMapping(value = "/v1/task", consumes = "application/json")
 public class TaskController {
 
     @RequestMapping(method = RequestMethod.GET, value = "getTasks")
@@ -23,18 +26,20 @@ public class TaskController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteTask")
-    public void deleteTask(Long taskId) {
+    public void deleteTask(@RequestBody Long taskId) {
+        log.info("Delete task {}", taskId);
 
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "updateTask")
-    public TaskDto updateTask(TaskDto task) {
+    public TaskDto updateTask(@RequestBody TaskDto task) {
+        log.info("Update task {}", task);
         return new TaskDto(1L, "Edited test title", "Test content");
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "createTask")
-    public void createTask(TaskDto task) {
-
+    @RequestMapping(method = RequestMethod.POST, value = "createTask")
+    public void createTask(@RequestBody TaskDto task) {
+        log.info("Create task for {}", task);
     }
 }
 
