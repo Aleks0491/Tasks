@@ -30,17 +30,6 @@ public class TaskController {
         return taskMapper.mapToTaskDtoList(service.getAllTask());
     }
 
-//    @RequestMapping(method = RequestMethod.GET, value = "getTaskById")
-//    public List<TaskDto> getTasksByIds(@RequestBody Long taskId) {
-//        return taskMapper.mapToTaskDtoList(service.getTasksByIds(taskId));
-//    }
-
-//    @RequestMapping(method = RequestMethod.GET, value = "getTaskById")
-////    public TaskDto getTask(Long taskId) {
-////        //return new TaskDto(1L, "testTitle", "test_content");
-////        return taskMapper.mapToTaskDto(service.getTaskById(taskId));
-////    }
-
     @RequestMapping(method = RequestMethod.GET, value = "getTask")
     public TaskDto getTask(@RequestParam Long taskId) throws TaskNotFoundException {
         return taskMapper.mapToTaskDto(service.getTask(taskId).orElseThrow(TaskNotFoundException::new));
@@ -48,7 +37,7 @@ public class TaskController {
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteTask")
     public void deleteTask(Long taskId) throws TaskNotFoundException {
-        log.info("Delete task {}", taskId);
+        service.deleteTask(taskId);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "updateTask")
